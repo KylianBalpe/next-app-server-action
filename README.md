@@ -4,8 +4,8 @@ This repository is my documentation for learning Next.js App Router with Route H
 
 ## TODO
 
-- [ ] Authentication
-  - [ ] Sign-in with GitHub
+- [x] Authentication
+  - [x] Sign-in with GitHub
 - [ ] Post
   - [ ] Post schema
   - [ ] Create post
