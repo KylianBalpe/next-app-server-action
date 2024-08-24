@@ -56,6 +56,7 @@ export const authOptions = {
           username: user.username,
         },
       };
+
       return session;
     },
   },

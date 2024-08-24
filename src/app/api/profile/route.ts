@@ -1,13 +1,14 @@
 import { authOptions } from "@/lib/auth";
-import { editProfileFormSchema } from "@/lib/form/profile-form";
+import { editUsernameFormSchema } from "@/lib/form/profile-form";
 import { db } from "@/lib/prisma";
 import { errorHandler } from "@/utils/error/error-handler";
+import { UpdateProfileRequest } from "@/utils/model/profile-model";
 import { ResponseError } from "@/utils/response/response";
 import { Validation } from "@/utils/validation/validation";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function PUT(req: Request) {
+export async function PATCH(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -19,14 +20,17 @@ export async function PUT(req: Request) {
   }
 
   const user = session.user;
-  const request = await req.json();
+  const request: UpdateProfileRequest = await req.json();
 
   try {
-    const updateRequest = Validation.validate(editProfileFormSchema, request);
+    const usernameRequest = Validation.validate(
+      editUsernameFormSchema,
+      request,
+    );
 
-    const isUsernameExist = await db.user.findFirst({
+    const isUsernameExist = await db.user.findUnique({
       where: {
-        username: updateRequest.username,
+        username: usernameRequest.username,
       },
     });
 
@@ -39,12 +43,17 @@ export async function PUT(req: Request) {
         id: Number(user.id),
       },
       data: {
-        ...updateRequest,
+        username: usernameRequest.username,
       },
     });
 
-    return NextResponse.json(updatedUser);
+    return NextResponse.json({
+      status: "success",
+      code: 200,
+      message: "Username updated successfully",
+      data: updatedUser,
+    });
   } catch (error) {
-    errorHandler(error as Error);
+    return errorHandler(error as Error);
   }
 }

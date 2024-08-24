@@ -16,6 +16,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  posts         Post[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,4 +59,19 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Post {
+  id       Int    @id @default(autoincrement())
+  title    String @db.VarChar(255)
+  slug     String @unique @db.VarChar(255)
+  content  String @db.Text
+  authorId Int
+  author   User   @relation(fields: [authorId], references: [id])
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("Posts")
 }

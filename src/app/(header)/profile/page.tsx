@@ -14,7 +14,7 @@ export default async function Page() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-screen-lg items-center">
       <div className="flex min-h-screen w-full flex-col border-x border-black">
-        <div className="w-full p-8">
+        <div className="w-full space-y-4 p-8">
           <Avatar className="mx-auto h-40 w-40 rounded-full border border-black">
             <AvatarImage
               src={session.user.image || "https://github.com/shadcn.png"}
@@ -22,6 +22,10 @@ export default async function Page() {
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
+
+          <h3 className="text-center text-2xl font-bold">
+            {session.user.name}
+          </h3>
         </div>
         <EditProfile session={session} />
       </div>
