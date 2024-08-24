@@ -63,7 +63,20 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-[6px]
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-accent-foreground/30;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent-foreground/40;
   }
 }
