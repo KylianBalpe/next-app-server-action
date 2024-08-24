@@ -12,13 +12,13 @@ This repository is my documentation for learning Next.js App Router with Route H
   - [ ] GET post / detail page
   - [ ] Edit post
   - [ ] Delete post
-- [ ] Profile
-  - [ ] Profile page
-  - [ ] Edit profile
+- [x] Profile
+  - [x] Profile page
+  - [x] Edit profile
 
 #### Additional features
 
-- [ ] Sign-in with Google
+- [x] Sign-in with Google
 
 ## Tech Stacks
 
