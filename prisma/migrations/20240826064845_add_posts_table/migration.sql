@@ -52,8 +52,6 @@ CREATE TABLE "VerificationToken" (
 -- CreateTable
 CREATE TABLE "Posts" (
     "id" SERIAL NOT NULL,
-    "title" VARCHAR(255) NOT NULL,
-    "slug" VARCHAR(255) NOT NULL,
     "content" TEXT NOT NULL,
     "authorId" INTEGER NOT NULL,
     "deletedAt" TIMESTAMP(3),
@@ -71,9 +69,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Posts_slug_key" ON "Posts"("slug");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

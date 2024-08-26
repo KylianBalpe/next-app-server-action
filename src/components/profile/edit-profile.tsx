@@ -67,7 +67,7 @@ export default function EditProfile({ session }: { session: Session }) {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-sm flex-col space-y-4">
+    <div className="mx-auto flex w-full max-w-screen-sm flex-col space-y-4 pb-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

@@ -63,8 +63,6 @@ model VerificationToken {
 
 model Post {
   id       Int    @id @default(autoincrement())
-  title    String @db.VarChar(255)
-  slug     String @unique @db.VarChar(255)
   content  String @db.Text
   authorId Int
   author   User   @relation(fields: [authorId], references: [id])

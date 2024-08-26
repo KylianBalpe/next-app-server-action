@@ -1,10 +1,22 @@
-import { Button } from "@/components/ui/button";
+import {
+  Post,
+  PostAuthor,
+  PostAuthorAvatar,
+  PostAuthorAvatarFallback,
+  PostAuthorAvatarImage,
+  PostAuthorContainer,
+  PostAuthorName,
+  PostAuthorUsername,
+  PostContainer,
+  PostContent,
+} from "@/components/posts/post";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EditProfile from "@/components/profile/edit-profile";
 import { redirect } from "next/navigation";
+import PostMenu from "@/components/posts/post-menu";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -28,6 +40,33 @@ export default async function Page() {
           </h3>
         </div>
         <EditProfile session={session} />
+        <div className="border-t border-t-black" />
+        <Post>
+          <PostContainer>
+            <PostAuthor>
+              <PostAuthorAvatar>
+                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
+                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
+              </PostAuthorAvatar>
+              <div className="inline-flex w-full items-center justify-between">
+                <PostAuthorContainer>
+                  <PostAuthorName>Bejir</PostAuthorName>
+                  <PostAuthorUsername>geming</PostAuthorUsername>
+                </PostAuthorContainer>
+                <PostMenu />
+              </div>
+            </PostAuthor>
+            <PostContent>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
+              perspiciatis quis eligendi adipisci alias ducimus cumque
+              laudantium non dignissimos omnis commodi soluta veritatis voluptas
+              quibusdam sit minus, perferendis modi? Officia quos ducimus,
+              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
+              id exercitationem quaerat? Voluptatem earum modi eveniet nam
+              adipisci.
+            </PostContent>
+          </PostContainer>
+        </Post>
       </div>
     </main>
   );
