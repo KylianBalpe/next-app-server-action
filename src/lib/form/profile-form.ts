@@ -1,5 +1,9 @@
 import { z } from "zod";
 
 export const editUsernameFormSchema = z.object({
-  username: z.string().min(1).max(255).optional(),
+  username: z
+    .string({ required_error: "Username cannot be empty" })
+    .min(1, "Username cannot be empty")
+    .max(100, "Username cannot be longer than 100 characters")
+    .optional(),
 });

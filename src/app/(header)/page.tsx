@@ -3,9 +3,6 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/session-provider";
 import { fetchPosts } from "@/lib/action/post-action";
-import { PostsType } from "@/utils/model/post-model";
-import { Suspense } from "react";
-import PostSkeleton from "@/components/skeleton/post-skeleton";
 import Posts from "@/components/post/post-list";
 
 export default async function Home() {
@@ -22,9 +19,7 @@ export default async function Home() {
             </SessionProvider>
           </div>
         )}
-        <Suspense fallback={<p>Loading...</p>}>
-          <Posts posts={posts} />
-        </Suspense>
+        <Posts posts={posts} />
       </div>
     </main>
   );

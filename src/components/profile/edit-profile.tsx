@@ -19,6 +19,7 @@ import { Pencil } from "lucide-react";
 import { editUsernameFormSchema } from "@/lib/form/profile-form";
 import { Session } from "next-auth";
 import { useToast } from "@/components/ui/use-toast";
+import { updateUsername } from "@/lib/action/profile-action";
 
 export default function EditProfile({ session }: { session: Session }) {
   const [isEdit, setIsEdit] = React.useState(false);
@@ -33,21 +34,13 @@ export default function EditProfile({ session }: { session: Session }) {
 
   async function onSubmit(values: z.infer<typeof editUsernameFormSchema>) {
     try {
-      const res = await fetch("http://localhost:3000/api/profile", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const res = await updateUsername(values);
 
-      const response = await res.json();
-
-      if (response.code !== 200) {
+      if (res.code !== 200) {
         toast({
           variant: "destructive",
           title: "Error",
-          description: response.message,
+          description: res.message,
           duration: 3000,
         });
         return;
@@ -56,7 +49,7 @@ export default function EditProfile({ session }: { session: Session }) {
       toast({
         variant: "success",
         title: "Success",
-        description: response.message,
+        description: res.message,
         duration: 3000,
       });
     } catch (error) {

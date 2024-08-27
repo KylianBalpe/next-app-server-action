@@ -3,7 +3,7 @@
 import { CreatePostRequest } from "@/utils/model/post-model";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { authOptions } from "../auth";
+import { authOptions } from "@/lib/auth";
 
 const API_URL = process.env.API_URL;
 

@@ -34,10 +34,14 @@ export default async function Page() {
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-
-          <h3 className="text-center text-2xl font-bold">
-            {session.user.name}
-          </h3>
+          <div className="flex flex-col gap-0">
+            <h3 className="text-center text-2xl font-bold">
+              {session.user.name}
+            </h3>
+            <h5 className="text-center text-lg text-gray-500">
+              {session.user.username}
+            </h5>
+          </div>
         </div>
         <EditProfile session={session} />
         <div className="border-t border-t-black" />
