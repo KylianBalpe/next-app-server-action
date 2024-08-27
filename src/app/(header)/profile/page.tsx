@@ -57,7 +57,7 @@ export default async function Page() {
                   <PostAuthorName>Bejir</PostAuthorName>
                   <PostAuthorUsername>geming</PostAuthorUsername>
                 </PostAuthorContainer>
-                <PostMenu />
+                {/* <PostMenu /> */}
               </div>
             </PostAuthor>
             <PostContent>

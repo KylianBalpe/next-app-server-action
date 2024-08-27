@@ -12,7 +12,7 @@ This repository is my documentation for learning Next.js App Router with Route H
   - [x] GET posts
   - [ ] GET posts by author
   - [ ] Edit post
-  - [ ] Delete post
+  - [x] Delete post
 - [x] Profile
   - [x] Profile page
   - [x] Edit profile

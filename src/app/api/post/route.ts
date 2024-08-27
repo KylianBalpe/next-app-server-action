@@ -1,4 +1,3 @@
-import { authOptions } from "@/lib/auth";
 import { CreatePostFormSchema } from "@/lib/form/post-form";
 import { db } from "@/lib/prisma";
 import { errorHandler } from "@/utils/error/error-handler";
@@ -43,6 +42,9 @@ export async function POST(req: Request) {
 export async function GET() {
   try {
     const posts = await db.post.findMany({
+      where: {
+        deletedAt: null,
+      },
       include: {
         author: {
           select: {

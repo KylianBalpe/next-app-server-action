@@ -13,8 +13,12 @@ import {
   PostContent,
 } from "@/components/post/post";
 import PostMenu from "@/components/post/post-menu";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
-export default function Posts({ posts }: { posts: PostsType[] }) {
+export default async function Posts({ posts }: { posts: PostsType[] }) {
+  const session = await getServerSession(authOptions);
+
   return posts.map((post: PostsType) => (
     <Post key={post.id}>
       <PostContainer>
@@ -28,7 +32,11 @@ export default function Posts({ posts }: { posts: PostsType[] }) {
               <PostAuthorName>{post.author.name}</PostAuthorName>
               <PostAuthorUsername>{post.author.username}</PostAuthorUsername>
             </PostAuthorContainer>
-            <PostMenu />
+            <PostMenu
+              postId={post.id}
+              postAuthor={post.author.username}
+              session={session!}
+            />
           </div>
         </PostAuthor>
         <PostContent>{post.content}</PostContent>
