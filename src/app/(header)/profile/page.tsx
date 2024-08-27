@@ -9,14 +9,14 @@ import {
   PostAuthorUsername,
   PostContainer,
   PostContent,
-} from "@/components/posts/post";
+} from "@/components/post/post";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EditProfile from "@/components/profile/edit-profile";
 import { redirect } from "next/navigation";
-import PostMenu from "@/components/posts/post-menu";
+import PostMenu from "@/components/post/post-menu";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

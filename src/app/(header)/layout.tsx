@@ -9,12 +9,9 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
   return (
     <>
-      <SessionProvider session={session}>
-        <Header />
-      </SessionProvider>
+      <Header />
       {children}
       <Toaster />
     </>

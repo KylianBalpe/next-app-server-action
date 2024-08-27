@@ -1,129 +1,30 @@
-import {
-  Post,
-  PostAuthor,
-  PostAuthorAvatar,
-  PostAuthorAvatarFallback,
-  PostAuthorAvatarImage,
-  PostAuthorContainer,
-  PostAuthorName,
-  PostAuthorUsername,
-  PostContainer,
-  PostContent,
-} from "@/components/posts/post";
-import PostMenu from "@/components/posts/post-menu";
+import AddPostForm from "@/components/post/add-form";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import SessionProvider from "@/components/session-provider";
+import { fetchPosts } from "@/lib/action/post-action";
+import { PostsType } from "@/utils/model/post-model";
+import { Suspense } from "react";
+import PostSkeleton from "@/components/skeleton/post-skeleton";
+import Posts from "@/components/post/post-list";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+  const posts = await fetchPosts();
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-screen-lg items-center">
       <div className="flex min-h-screen w-full flex-col border-x border-x-black">
-        <Post>
-          <PostContainer>
-            <PostAuthor>
-              <PostAuthorAvatar>
-                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
-                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
-              </PostAuthorAvatar>
-              <div className="inline-flex w-full items-center justify-between">
-                <PostAuthorContainer>
-                  <PostAuthorName>Bejir</PostAuthorName>
-                  <PostAuthorUsername>geming</PostAuthorUsername>
-                </PostAuthorContainer>
-                <PostMenu />
-              </div>
-            </PostAuthor>
-            <PostContent>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              perspiciatis quis eligendi adipisci alias ducimus cumque
-              laudantium non dignissimos omnis commodi soluta veritatis voluptas
-              quibusdam sit minus, perferendis modi? Officia quos ducimus,
-              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
-              id exercitationem quaerat? Voluptatem earum modi eveniet nam
-              adipisci.
-            </PostContent>
-          </PostContainer>
-        </Post>
-        <Post>
-          <PostContainer>
-            <PostAuthor>
-              <PostAuthorAvatar>
-                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
-                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
-              </PostAuthorAvatar>
-              <div className="inline-flex w-full items-center justify-between">
-                <PostAuthorContainer>
-                  <PostAuthorName>Bejir</PostAuthorName>
-                  <PostAuthorUsername>geming</PostAuthorUsername>
-                </PostAuthorContainer>
-                <PostMenu />
-              </div>
-            </PostAuthor>
-            <PostContent>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              perspiciatis quis eligendi adipisci alias ducimus cumque
-              laudantium non dignissimos omnis commodi soluta veritatis voluptas
-              quibusdam sit minus, perferendis modi? Officia quos ducimus,
-              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
-              id exercitationem quaerat? Voluptatem earum modi eveniet nam
-              adipisci.
-            </PostContent>
-          </PostContainer>
-        </Post>
-        <Post>
-          <PostContainer>
-            <PostAuthor>
-              <PostAuthorAvatar>
-                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
-                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
-              </PostAuthorAvatar>
-              <div className="inline-flex w-full items-center justify-between">
-                <PostAuthorContainer>
-                  <PostAuthorName>Bejir</PostAuthorName>
-                  <PostAuthorUsername>geming</PostAuthorUsername>
-                </PostAuthorContainer>
-                <PostMenu />
-              </div>
-            </PostAuthor>
-            <PostContent>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              perspiciatis quis eligendi adipisci alias ducimus cumque
-              laudantium non dignissimos omnis commodi soluta veritatis voluptas
-              quibusdam sit minus, perferendis modi? Officia quos ducimus,
-              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
-              id exercitationem quaerat? Voluptatem earum modi eveniet nam
-              adipisci.
-            </PostContent>
-          </PostContainer>
-        </Post>
-        <Post>
-          <PostContainer>
-            <PostAuthor>
-              <PostAuthorAvatar>
-                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
-                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
-              </PostAuthorAvatar>
-              <div className="inline-flex w-full items-center justify-between">
-                <PostAuthorContainer>
-                  <PostAuthorName>Bejir</PostAuthorName>
-                  <PostAuthorUsername>geming</PostAuthorUsername>
-                </PostAuthorContainer>
-                <PostMenu />
-              </div>
-            </PostAuthor>
-            <PostContent>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              perspiciatis quis eligendi adipisci alias ducimus cumque
-              laudantium non dignissimos omnis commodi soluta veritatis voluptas
-              quibusdam sit minus, perferendis modi? Officia quos ducimus,
-              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
-              id exercitationem quaerat? Voluptatem earum modi eveniet nam
-              adipisci.
-            </PostContent>
-          </PostContainer>
-        </Post>
+        {session && (
+          <div className="w-full border-b border-b-black py-8">
+            <SessionProvider session={session}>
+              <AddPostForm />
+            </SessionProvider>
+          </div>
+        )}
+        <Suspense fallback={<p>Loading...</p>}>
+          <Posts posts={posts} />
+        </Suspense>
       </div>
     </main>
   );
