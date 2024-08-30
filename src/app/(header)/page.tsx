@@ -2,27 +2,13 @@ import AddPostForm from "@/components/post/add-form";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/session-provider";
-import { fetchPosts } from "@/lib/action/post-action";
+import { fetchPosts } from "@/app/actions/post/post-action";
 import Posts from "@/components/post/post-list";
-import { unstable_cache } from "next/cache";
-
-// export const revalidate = 60;
-
-// const getCachedPosts = unstable_cache(
-//   async () => {
-//     return await fetchPosts();
-//   },
-//   ["posts"],
-//   { revalidate: 60, tags: ["posts"] },
-// );
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
   const posts = await fetchPosts();
-
-  // const posts = await getCachedPosts();
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-screen-lg items-center">
@@ -34,7 +20,7 @@ export default async function Home() {
             </SessionProvider>
           </div>
         )}
-        {posts && <Posts posts={posts} />}
+        {posts && <Posts posts={posts.data} />}
       </div>
     </main>
   );

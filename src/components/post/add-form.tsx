@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "next-auth/react";
-import { createPost } from "@/lib/action/post-action";
+import { createPost } from "@/app/actions/post/post-action";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function AddPostForm() {
@@ -35,26 +35,34 @@ export default function AddPostForm() {
   async function onSubmit(values: z.infer<typeof CreatePostFormSchema>) {
     if (status === "authenticated" && session) {
       try {
-        const res = await createPost(values);
+        const res = await createPost(values, session?.user.id);
 
-        if (res.code !== 201) {
+        if (!res?.ok) {
           toast({
             variant: "destructive",
             title: "Error",
-            description: res.message,
+            description: res?.message,
             duration: 3000,
           });
+
           return;
         }
 
         toast({
           variant: "success",
           title: "Success",
-          description: res.message,
+          description: res?.message,
           duration: 3000,
         });
       } catch (error) {
-        console.error(error);
+        if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: error.message,
+            duration: 3000,
+          });
+        }
       } finally {
         form.reset();
       }
@@ -65,7 +73,7 @@ export default function AddPostForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="itemsflex mx-auto flex w-full max-w-screen-sm flex-col space-y-2"
+        className="mx-auto flex w-full max-w-screen-sm flex-col space-y-2"
       >
         <FormField
           control={form.control}

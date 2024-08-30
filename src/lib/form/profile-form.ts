@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const editUsernameFormSchema = z.object({
+export const EditUsernameFormSchema = z.object({
   username: z
     .string({ required_error: "Username cannot be empty" })
     .min(1, "Username cannot be empty")

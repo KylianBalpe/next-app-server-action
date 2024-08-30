@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { deletePost } from "@/lib/action/post-action";
+import { deletePost } from "@/app/actions/post/post-action";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function PostMenu({
@@ -46,25 +46,40 @@ export default function PostMenu({
     try {
       const res = await deletePost(postId);
 
-      if (res.code !== 200) {
+      if (!res?.ok) {
         toast({
           variant: "destructive",
           title: "Error",
-          description: res.message,
+          description: res?.message,
           duration: 3000,
         });
+
         return;
       }
 
       toast({
         variant: "success",
         title: "Success",
-        description: res.message,
+        description: res?.message,
         duration: 3000,
       });
       setOpen(false);
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+          duration: 3000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Internal server error",
+          duration: 3000,
+        });
+      }
     }
   }
 

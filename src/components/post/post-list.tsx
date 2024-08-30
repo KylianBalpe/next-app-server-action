@@ -24,7 +24,9 @@ export default async function Posts({ posts }: { posts: PostsType[] }) {
       <PostContainer>
         <PostAuthor>
           <PostAuthorAvatar>
-            <PostAuthorAvatarImage src={post.author.image} />
+            <PostAuthorAvatarImage
+              src={post.author.image || "https://github.com/shadcn.png"}
+            />
             <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
           </PostAuthorAvatar>
           <div className="inline-flex w-full items-center justify-between">
@@ -34,7 +36,7 @@ export default async function Posts({ posts }: { posts: PostsType[] }) {
             </PostAuthorContainer>
             <PostMenu
               postId={post.id}
-              postAuthor={post.author.username}
+              postAuthor={post.author.username!}
               session={session!}
             />
           </div>
