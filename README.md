@@ -6,15 +6,15 @@ This repository is my documentation for learning Next.js App Router with Server 
 
 - [x] Authentication
   - [x] Sign-in with GitHub
-- [ ] Post
+- [x] Post
   - [x] Post schema
   - [x] Create post
   - [x] GET posts
-  - [ ] GET posts by author
+  - [x] GET posts by author
   - [x] Edit post
   - [x] Delete post
 - [x] Profile
-  - [ ] View profile by username with posts
+  - [x] View profile by username with posts
   - [x] Profile page
   - [x] Edit profile
 

@@ -59,3 +59,30 @@ export const updateUsername = async (request: UpdateProfileRequest) => {
     console.error(error);
   }
 };
+
+export const getUsername = async (username: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    if (!user) {
+      return {
+        ok: false,
+        status: 404,
+        message: "User not found",
+      };
+    }
+
+    return {
+      ok: true,
+      status: 200,
+      message: "User found",
+      data: user,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+};
