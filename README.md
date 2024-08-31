@@ -1,6 +1,6 @@
-# Next.js App Router with Route Handlers
+# Next.js App Router with Server Action
 
-This repository is my documentation for learning Next.js App Router with Route Handlers.
+This repository is my documentation for learning Next.js App Router with Server Action.
 
 ## TODO
 
