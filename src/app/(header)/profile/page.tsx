@@ -16,13 +16,19 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EditProfile from "@/components/profile/edit-profile";
 import { redirect } from "next/navigation";
+import { getPostsByAuthor } from "@/app/actions/post/post-action";
 import PostMenu from "@/components/post/post-menu";
+import AddPostForm from "@/components/post/add-form";
+import SessionProvider from "@/components/session-provider";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
+
+  const posts = await getPostsByAuthor(session.user.username);
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-screen-lg items-center">
       <div className="flex min-h-screen w-full flex-col border-x border-black">
@@ -45,32 +51,39 @@ export default async function Page() {
         </div>
         <EditProfile session={session} />
         <div className="border-t border-t-black" />
-        <Post>
-          <PostContainer>
-            <PostAuthor>
-              <PostAuthorAvatar>
-                <PostAuthorAvatarImage src="https://github.com/shadcn.png" />
-                <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
-              </PostAuthorAvatar>
-              <div className="inline-flex w-full items-center justify-between">
-                <PostAuthorContainer>
-                  <PostAuthorName>Bejir</PostAuthorName>
-                  <PostAuthorUsername>geming</PostAuthorUsername>
-                </PostAuthorContainer>
-                {/* <PostMenu /> */}
-              </div>
-            </PostAuthor>
-            <PostContent>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              perspiciatis quis eligendi adipisci alias ducimus cumque
-              laudantium non dignissimos omnis commodi soluta veritatis voluptas
-              quibusdam sit minus, perferendis modi? Officia quos ducimus,
-              sapiente unde cupiditate autem consequuntur ab nemo voluptatum qui
-              id exercitationem quaerat? Voluptatem earum modi eveniet nam
-              adipisci.
-            </PostContent>
-          </PostContainer>
-        </Post>
+        <div className="w-full border-b border-b-black py-8">
+          <SessionProvider session={session}>
+            <AddPostForm />
+          </SessionProvider>
+        </div>
+        {posts?.data?.map((post) => (
+          <Post key={post.id}>
+            <PostContainer>
+              <PostAuthor>
+                <PostAuthorAvatar>
+                  <PostAuthorAvatarImage
+                    src={session.user.image || "https://github.com/shadcn.png"}
+                  />
+                  <PostAuthorAvatarFallback>BP</PostAuthorAvatarFallback>
+                </PostAuthorAvatar>
+                <div className="inline-flex w-full items-center justify-between">
+                  <PostAuthorContainer>
+                    <PostAuthorName>{post.author.name}</PostAuthorName>
+                    <PostAuthorUsername>
+                      {post.author.username}
+                    </PostAuthorUsername>
+                  </PostAuthorContainer>
+                  <PostMenu
+                    postAuthor={post.author.username!}
+                    postId={post.id}
+                    session={session}
+                  />
+                </div>
+              </PostAuthor>
+              <PostContent>{post.content}</PostContent>
+            </PostContainer>
+          </Post>
+        ))}
       </div>
     </main>
   );

@@ -13,7 +13,8 @@ This repository is my documentation for learning Next.js App Router with Server 
   - [ ] GET posts by author
   - [x] Edit post
   - [x] Delete post
-  - [x] Profile
+- [x] Profile
+  - [ ] View profile by username with posts
   - [x] Profile page
   - [x] Edit profile
 

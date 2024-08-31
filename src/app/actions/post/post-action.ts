@@ -251,3 +251,47 @@ export const deletePost = async (id: number) => {
     console.error(error);
   }
 };
+
+export const getPostsByAuthor = async (username: string) => {
+  try {
+    const author = await db.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    if (!author) {
+      return {
+        ok: false,
+        status: 404,
+        message: "Author not found",
+      };
+    }
+
+    const posts = await db.post.findMany({
+      where: {
+        authorId: author.id,
+        deletedAt: null,
+      },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    return {
+      ok: true,
+      status: 200,
+      message: "Posts fetched successfully",
+      data: posts,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+};
