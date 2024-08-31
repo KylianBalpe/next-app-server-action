@@ -93,12 +93,14 @@ export default function PostMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuItem asChild>
-            <Link href={`/${postAuthor}`}>
-              Go to {postAuthor}
-              <ArrowRightCircleIcon className="ml-auto h-4 w-4" />
-            </Link>
-          </DropdownMenuItem>
+          {postAuthor !== session?.user.username && (
+            <DropdownMenuItem asChild>
+              <Link href={`/${postAuthor}`}>
+                Go to {postAuthor}
+                <ArrowRightCircleIcon className="ml-auto h-4 w-4" />
+              </Link>
+            </DropdownMenuItem>
+          )}
           {postAuthor === session?.user.username && (
             <>
               <DropdownMenuItem asChild>
